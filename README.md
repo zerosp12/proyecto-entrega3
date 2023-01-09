@@ -1,8 +1,8 @@
-# proyecto-entrega2
+# proyecto-entrega3
 
 ##
 ## Usuarios: 
-## x / 1234
+## jose / 1234
 ## ethel / 1234
 ##
 
