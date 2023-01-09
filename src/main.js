@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import store from './store'
 import vueForm from 'vue-form'
 
 import 'bootstrap'
@@ -16,9 +17,10 @@ Vue.use(vueForm, {
     }
 });
 
-document.title = 'Proyecto Etapa 2'
+document.title = 'Proyecto Etapa 3'
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

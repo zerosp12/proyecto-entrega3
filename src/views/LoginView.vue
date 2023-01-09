@@ -53,11 +53,11 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import ModuleTitle from "@/components/ModuleTitle.vue";
 
 import { MixinForms } from "@/mixins/mixin.forms.js";
 import { MixinMensajes } from "@/mixins/mixin.messages.js";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "LoginView",
@@ -67,7 +67,7 @@ export default {
   mixins: [MixinForms, MixinMensajes],
   data() {
     return {
-      usersList: {},
+      usuarios: {},
 
       //Form Check
       loginform: {},
@@ -78,37 +78,38 @@ export default {
     };
   },
   created() {
-    let URL_USUARIOS = "https://639a60473a5fbccb5265ab59.mockapi.io/usuarios";
 
-    axios
-      .get(URL_USUARIOS)
-      .then((usuarios) => {
-        localStorage.usersList = JSON.stringify(usuarios.data);
-        this.usersList = JSON.parse(localStorage.usersList);
-      })
-      .catch((err) => console.log(err.response.data))
-      .finally((fin) => console.log(fin));
+    if(localStorage.isLogin == true) {
+
+      this.$router.push('/productos')
+      return;
+    }
+
+    this.usuarios = this.obtenerUsuarios();
   },
   methods: {
+    ...mapGetters('usuarios', ['obtenerUsuarios']),
+    
     enviarLogin() {
-      let infoUsuario = this.usersList.find(
-        (x) =>
+
+      let info = this.usuarios.find((x) =>
           x.usuario == this.model.username && x.password == this.model.password
       );
 
-      if (infoUsuario) {
-        localStorage.isLogin = Boolean(true);
-        localStorage.clientID = infoUsuario.id;
-        localStorage.clientName = infoUsuario.nombre;
-        localStorage.avatarPath = infoUsuario.avatar;
-        localStorage.userPrivileges = Number(infoUsuario.privilegios);
+      console.log(this.usuarios)
 
-        if (localStorage.userPrivileges == 1) {
-          this.$router.push('gestion')
-        } else {
-          this.$router.push('productos')
-        }
-        
+      if (info) {
+
+        localStorage.isLogin = Boolean(true)
+        localStorage.userPrivileges = Number(info.privilegios)
+        //--
+        localStorage.clientID = info.id
+        localStorage.clientAddress = info.direccion
+        localStorage.clientName = info.nombre
+        localStorage.avatarPath = info.avatar
+
+        this.$router.push((info.privilegios == 1) ? 'gestion' : 'productos')
+
         setTimeout(()=>{ this.$router.go(0) }, 100)
 
       } else {

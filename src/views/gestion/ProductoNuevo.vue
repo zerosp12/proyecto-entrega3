@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import axios from "axios"
-//--
 import FormularioProducto from "@/components/FormularioProducto.vue"
 //--
 import { MixinMensajes } from "@/mixins/mixin.messages.js"
@@ -30,17 +28,16 @@ export default {
     return {}
   },
   methods: {
-    enviarForm(producto) {
-      let URL_PRODUCTOS =
-        "https://639a60473a5fbccb5265ab59.mockapi.io/productos"
 
-      axios
-        .post(URL_PRODUCTOS, JSON.parse(JSON.stringify(producto)))
+    enviarForm(producto) {
+        //Gracias Google
+        this.$store.dispatch('productos/agregarProductoAPI', producto)
+
         .then(resultado => {
           if (resultado.status == 201) {
-            this.crearMensaje(1, "El producto se agrego correctamente...")
+            this.$router.push({path: '/gestion/productos'})
           } else {
-            this.crearMensaje(2, `Se produjo un error al agregar el producto\n${resultado.statusText}`)
+            this.crearMensaje(2, `Se produjo un error al agregar el producto\n\r${resultado.statusText}`)
           }
         })
     },

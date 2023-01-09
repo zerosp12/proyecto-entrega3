@@ -1,28 +1,17 @@
 <template>
   <div>
-    <ModalMessage
-      :Mensaje="mensajeTexto"
-      :Tipo="mensajeTipo"
-      :MostrarMensaje="mensajeMostrar"
-      @cerrarMensaje="cerrarMensaje"
-    />
-    <formulario-producto
-      textoTitulo="> Editar Producto"
-      textoBoton="Guardar Cambios"
-      :getProducto="producto"
-      @enviarForm="enviarForm($event)"
-    />
+    <ModalMessage :Mensaje="mensajeTexto" :Tipo="mensajeTipo" :MostrarMensaje="mensajeMostrar"
+      @cerrarMensaje="cerrarMensaje" />
+    <formulario-producto textoTitulo="> Editar Producto" textoBoton="Guardar Cambios" :getProducto="producto"
+      @enviarForm="enviarForm($event)" />
   </div>
 </template>
 
 <script>
-import axios from "axios"
-//--
 import FormularioProducto from "@/components/FormularioProducto.vue"
 //--
 import { MixinMensajes } from "@/mixins/mixin.messages.js"
-
-let URL_PRODUCTOS = "https://639a60473a5fbccb5265ab59.mockapi.io/productos"
+import { mapGetters } from 'vuex'
 
 export default {
   name: "ProductoNuevo",
@@ -31,6 +20,7 @@ export default {
   data() {
     return {
       producto: {
+        id: 0,
         nombre: '',
         descripcion: '',
         precio: 0,
@@ -38,27 +28,21 @@ export default {
       },
     }
   },
-  beforeCreate() {
-    axios
-        .get(`${URL_PRODUCTOS}/${this.$route.params.id}`, )
-        .then(resultado => {
-          this.producto.nombre = resultado.data.nombre
-          this.producto.descripcion = resultado.data.descripcion
-          this.producto.precio = Number(resultado.data.precio)
-          this.producto.image = resultado.data.image
-        })
-    
+  created() {
+    let index = this.$route.params.id;
+    this.producto = this.obtenerProductos().find(x => x.id == index)
   },
   methods: {
-    enviarForm(producto) {
+    ...mapGetters('productos', ['obtenerProductos', 'obtenerResultado']),
 
-      axios
-        .put(`${URL_PRODUCTOS}/${this.$route.params.id}`, JSON.parse(JSON.stringify(producto)))
+    enviarForm(producto) {
+      //Gracias Google
+      this.$store.dispatch('productos/editarProductoAPI', producto)
         .then(resultado => {
           if (resultado.status == 200) {
             this.crearMensaje(1, "El producto se edito correctamente...")
           } else {
-            this.crearMensaje(2, `Se produjo un error al editar el producto\n${resultado.status}`)
+            this.crearMensaje(2, "Se produjo un error al editar el producto")
           }
         })
     },

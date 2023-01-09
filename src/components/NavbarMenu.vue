@@ -25,7 +25,7 @@
               <li v-if="isLogin && userPrivileges == 0" class="nav-item">
                 <router-link class="nav-link" :to="linkCarrito">
                   <i class="fas fa-shopping-cart mr-2"></i> 
-                  <span class="badge text-bg-warning">{{ carritoCount }}</span>
+                  <span class="badge text-bg-warning">{{ obtenerCarritoCount }}</span>
                 </router-link>
               </li>
               <li v-if="isLogin" class="nav-item">
@@ -63,11 +63,10 @@
 </template>
 
 <script>
-import { MixinCarrito } from "@/mixins/mixin.carrito.js";
+import { mapGetters } from "vuex";
 
 export default {
   name: "NavbarMenu",
-  mixins: [MixinCarrito],
   data() {
     return {
       isLogin: false,
@@ -80,9 +79,7 @@ export default {
   },
   created() {
     this.linkCarrito = "/carrito";
-
-    setInterval(this.obtenerCarritoCount, 300)
-
+    
     if (localStorage.isLogin !== undefined) {
       this.isLogin = JSON.parse(localStorage.isLogin); //Sino toma String (Gracias Google)
 
@@ -91,7 +88,7 @@ export default {
         this.imagePath = localStorage.avatarPath;
         this.userPrivileges = localStorage.userPrivileges;
         this.linkCarrito = `/carrito/${localStorage.clientID}`;
-        this.carritoCount = localStorage.carritoCount;
+        this.carritoCount = 0;
       } else {
         localStorage.isLogin = false;
         localStorage.clientName = "";
@@ -102,8 +99,12 @@ export default {
     }
   },
   methods: {
+    ...mapGetters('carrito', ['obtenerContador']),
+  },
+  computed: {
+
     obtenerCarritoCount() {
-        this.carritoCount = localStorage.carritoCount;
+        return this.obtenerContador();
     },
   },
 };

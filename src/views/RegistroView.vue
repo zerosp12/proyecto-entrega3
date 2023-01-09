@@ -1,27 +1,14 @@
 <template>
   <div class="form-content">
-    <ModalMessage
-      :Mensaje="mensajeTexto"
-      :Tipo="mensajeTipo"
-      :MostrarMensaje="mensajeMostrar"
-      @cerrarMensaje="cerrarMensaje"
-    />
-    <ModuleTitle
-      moduloTitulo="Registra tu Cuenta"
-      moduloIcono="fas fa-user-plus"
-    />
+    <ModalMessage :Mensaje="mensajeTexto" :Tipo="mensajeTipo" :MostrarMensaje="mensajeMostrar"
+      @cerrarMensaje="cerrarMensaje" />
+    <ModuleTitle moduloTitulo="Registra tu Cuenta" moduloIcono="fas fa-user-plus" />
     <vue-form :state="regform" @submit.prevent="enviarRegistro()">
       <!--Nombre y Apellido-->
       <validate auto-label class="form-group required-field mb-3">
         <label class="form-label">Nombre y Apellido</label>
-        <input
-          v-model="model.nombre"
-          type="text"
-          name="nombre"
-          class="form-control"
-          :class="obtenerClassEstado(regform.nombre)"
-          required
-        />
+        <input v-model="model.nombre" type="text" name="nombre" class="form-control"
+          :class="obtenerClassEstado(regform.nombre)" required />
         <field-messages name="nombre" show="$touched || $submitted">
           <div slot="required" class="text-danger">
             Debes ingresar el Nombre y Apellido
@@ -31,14 +18,8 @@
       <!--Usuario-->
       <validate auto-label class="form-group required-field mb-3">
         <label class="form-label">Usuario</label>
-        <input
-          v-model="model.usuario"
-          type="text"
-          name="usuario"
-          class="form-control"
-          :class="obtenerClassEstado(regform.usuario)"
-          required
-        />
+        <input v-model="model.usuario" type="text" name="usuario" class="form-control"
+          :class="obtenerClassEstado(regform.usuario)" required />
         <field-messages name="usuario" show="$touched || $submitted">
           <div slot="required" class="text-danger">
             Debes ingresar un Nombre de Usuario
@@ -48,15 +29,8 @@
       <!--Contraseña-->
       <validate auto-label class="form-group required-field mb-3">
         <label class="form-label">Contraseña</label>
-        <input
-          v-model="model.password"
-          type="password"
-          name="password"
-          class="form-control"
-          minlength="4"
-          :class="obtenerClassEstado(regform.password)"
-          required
-        />
+        <input v-model="model.password" type="password" name="password" class="form-control" minlength="4"
+          :class="obtenerClassEstado(regform.password)" required />
         <field-messages name="password" show="$touched || $submitted">
           <div slot="minlength" class="text-danger">
             La contraseña debe tener minimo 4 caracteres
@@ -69,16 +43,8 @@
       <!--Repite Contraseña-->
       <validate auto-label class="form-group required-field mb-3">
         <label class="form-label">Repite la Contraseña</label>
-        <input
-          v-model="model.repassword"
-          type="password"
-          name="repassword"
-          class="form-control"
-          minlength="4"
-          :matches="model.password"
-          :class="obtenerClassEstado(regform.repassword)"
-          required
-        />
+        <input v-model="model.repassword" type="password" name="repassword" class="form-control" minlength="4"
+          :matches="model.password" :class="obtenerClassEstado(regform.repassword)" required />
         <field-messages name="repassword" show="$touched || $submitted">
           <div slot="minlength" class="text-danger">
             La contraseña debe tener minimo 4 caracteres
@@ -94,14 +60,8 @@
       <!--Email-->
       <validate auto-label class="form-group required-field mb-3">
         <label class="form-label">Email</label>
-        <input
-          v-model="model.email"
-          type="email"
-          name="email"
-          class="form-control"
-          :class="obtenerClassEstado(regform.email)"
-          required
-        />
+        <input v-model="model.email" type="email" name="email" class="form-control"
+          :class="obtenerClassEstado(regform.email)" required />
         <field-messages name="email" show="$touched || $submitted">
           <div slot="email" class="text-danger">
             El formato es inválido, Ej: email@gmail.com
@@ -111,12 +71,7 @@
       </validate>
       <!--Privilegios-->
       <validate auto-label class="form-group required-field mb-3">
-        <input
-          v-model="model.privilegios"
-          class="form-check-input"
-          type="checkbox"
-          name="privilegios"
-        />
+        <input v-model="model.privilegios" class="form-check-input" type="checkbox" name="privilegios" />
         <label class="chkbox-label"> Cuenta con Privilegios?</label>
       </validate>
       <button type="submit" class="btn btn-success btn-block mb-3">
@@ -126,10 +81,10 @@
   </div>
 </template>
 <script>
-import axios from "axios"
 import ModuleTitle from "@/components/ModuleTitle.vue"
 import { MixinForms } from "@/mixins/mixin.forms.js"
 import { MixinMensajes } from "@/mixins/mixin.messages.js"
+import { mapGetters } from "vuex"
 
 export default {
   name: "RegistroView",
@@ -154,14 +109,11 @@ export default {
     }
   },
   created() {
-    let URL_USUARIOS = "https://639a60473a5fbccb5265ab59.mockapi.io/usuarios"
-
-    //Traemos los usuarios
-    axios.get(URL_USUARIOS).then(result => {
-      this.usuarios = result.data
-    })
+    this.usuarios = this.obtenerUsuarios();
   },
   methods: {
+    ...mapGetters('usuarios', ['obtenerUsuarios']),
+
     enviarRegistro() {
       if (this.regform.$valid) {
         if (this.usuarios.find(x => x.usuario == this.model.nombre)) {
@@ -174,9 +126,6 @@ export default {
           return
         }
 
-        let URL_USUARIOS =
-          "https://639a60473a5fbccb5265ab59.mockapi.io/usuarios"
-
         //Registro
         let usuario = {
           nombre: this.model.nombre,
@@ -186,33 +135,33 @@ export default {
           privilegios: this.model.privilegios,
         }
 
-        axios
-          .post(URL_USUARIOS, usuario)
-          .then(resultado => {
-            if (resultado.status == 201) {
-              this.model = {
-                nombre: "",
-                usuario: "",
-                password: "",
-                repassword: "",
-                email: "",
-                privilegios: 0,
-              }
+        this.$store.dispatch('usuarios/agregarUsuarioAPI', usuario)
 
-              this.crearMensaje(1, "La cuenta fue creada exitosamente")
-              this.regform._reset()
-              
-              setTimeout(() => {
-                this.$router.push("/login")
-              }, 1000)
-              
-            } else {
-              this.crearMensaje(
-                2,
-                "Se produjo un error al intentar crear la cuenta"
-              )
+        .then(resultado => {
+          if (resultado.status == 201) {
+            this.model = {
+              nombre: "",
+              usuario: "",
+              password: "",
+              repassword: "",
+              email: "",
+              privilegios: 0,
             }
-          })
+
+            this.crearMensaje(1, "La cuenta fue creada exitosamente")
+            this.regform._reset()
+
+            setTimeout(() => {
+              this.$router.push("/login")
+            }, 1000)
+
+          } else {
+            this.crearMensaje(
+              2,
+              "Se produjo un error al intentar crear la cuenta"
+            )
+          }
+        })
           .catch(err => console.log(err.response.data))
           .finally(fin => console.log(fin))
       }

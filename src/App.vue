@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from 'vuex';
 import NavbarMenu from "./components/NavbarMenu.vue";
 
 export default {
@@ -13,6 +14,16 @@ export default {
   components: {
     NavbarMenu,
   },
+  created() {
+    this.cargarCarrito()
+    this.obtenerProductosAPI()
+    this.obtenerUsuariosAPI()
+  },
+  methods: {
+    ...mapMutations('carrito', ['cargarCarrito']),
+    ...mapActions('productos', ['obtenerProductosAPI']),
+    ...mapActions('usuarios', ['obtenerUsuariosAPI'])
+  }
 };
 </script>
 

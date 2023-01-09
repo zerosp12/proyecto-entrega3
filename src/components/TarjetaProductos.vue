@@ -21,11 +21,9 @@
   </div>
 </template>
 <script>
-import { MixinCarrito } from "@/mixins/mixin.carrito.js";
-
+import { mapMutations } from 'vuex';
 export default {
   name: "ProductCard",
-  mixins: [MixinCarrito],
   data: () => {
     return {
       botonActivo: false,
@@ -40,6 +38,8 @@ export default {
     },
   },
   methods: {
+    ...mapMutations('carrito', ['insertarProducto']),
+
     addProductToCart(event) {
       if (JSON.parse(localStorage.isLogin)) {
         this.botonActivo = true;
@@ -47,7 +47,7 @@ export default {
         var target = event.currentTarget;
         target.innerHTML = '<i class="fas fa-check mr-2"></i> <b>Agregado!</b>';
 
-        this.insertarItem({
+        this.insertarProducto({
           id_producto: Number(this.producto.id),
           precio: this.producto.precio,
           cantidad: 1,

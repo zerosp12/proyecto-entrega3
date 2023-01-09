@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row">
+    <div class="row" v-if="!productoNotFound">
       <div class="col-6">
         <img :src="producto.image" class="card-img-top" />
       </div>
@@ -25,36 +25,43 @@
         </button>
       </div>
     </div>
+    <div v-else>
+      <div class="alert alert-danger" role="alert">
+        <strong>Error!</strong> No se pudo encontrar el producto solicitado ... :(
+      </div>
+      
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import { MixinCarrito } from "@/mixins/mixin.carrito.js";
-
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "ProductoView",
-  mixins: [MixinCarrito],
   data() {
     return {
       producto: [],
+      productoNotFound: false,
     };
   },
   created() {
     let index = this.$route.params.id;
-    let URL_PRODUCTOS = `https://639a60473a5fbccb5265ab59.mockapi.io/productos/${index}`;
+ 
+    if(this.obtenerContador() == 0) {
+      this.obtenerProductosAPI()
+    }
+    
+    this.producto = this.obtenerProductos().find(x => x.id == index)
 
-    axios
-      .get(URL_PRODUCTOS)
-      .then((productos) => {
-        this.producto = productos.data;
-        setTimeout(() => {
-          this.showLoading = false;
-        }, 500);
-      })
-      .catch((err) => console.log(err.response.data));
+    if(this.producto == undefined) {
+      this.productoNotFound = true
+    }
   },
   methods: {
+    ...mapGetters('productos', ['obtenerProductos', 'obtenerContador']),
+    ...mapActions('productos', ['obtenerProductosAPI']),
+    ...mapMutations('carrito', ['insertarProducto']),
+
     addProductToCart(event) {
       if (JSON.parse(localStorage.isLogin)) {
         this.botonActivo = true;
@@ -62,7 +69,7 @@ export default {
         var target = event.currentTarget;
         target.innerHTML = '<i class="fas fa-check mr-2"></i> <b>Agregado!</b>';
 
-        this.insertarItem({
+        this.insertarProducto({
           id_producto: Number(this.producto.id),
           precio: this.producto.precio,
           cantidad: 1,
@@ -84,6 +91,8 @@ export default {
       return this.botonActivo;
     },
     obtenerDescripcionConSalto() {
+      if(this.producto.length == 0) return ""
+
       return this.producto.descripcion.replace(/\n/g, "<br />");
     },
   },

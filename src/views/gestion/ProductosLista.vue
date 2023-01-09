@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(producto, index) of productList" :key="index">
+          <tr v-for="(producto, index) of obtenerProductos()" :key="index">
             <td scope="row">{{ producto.nombre }}</td>
             <td>$ {{ producto.precio }}</td>
             <td class="td_descripcion">
@@ -37,56 +37,40 @@
   </div>
 </template>
 <script>
-let URL_PRODUCTOS = `https://639a60473a5fbccb5265ab59.mockapi.io/productos/`
-
-import axios from "axios"
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
-  name: "ProductosLista.vue",
+  name: "ProductosLista",
   components: {
     LoadingSpinner
   },
   data() {
     return {
-      showLoading: true,
       productList: [],
     }
   },
 
   created() {
-    axios
-      .get(URL_PRODUCTOS)
-      .then(productos => {
-        this.productList = productos.data
-        setTimeout(() => {
-          this.showLoading = false
-        }, 500)
-      })
-      .catch(err => console.log(err.response.data))
+    this.obtenerProductosAPI();
   },
-
   methods: {
+    ...mapGetters('productos', ['obtenerProductos', 'checkLoading']),
+    ...mapActions('productos', ['obtenerProductosAPI', 'eliminarProductoAPI']),
+
     deleteItem(index) {
       var answer = window.confirm("Deseas Borrar el siguente Producto?");
       if (answer) {
-        axios
-          .delete(`${URL_PRODUCTOS}/${index}`)
-          .then(resp => {
-            
-            if(resp.status == 200) {
-
-              let product = this.productList.findIndex(x => x.id == index)
-
-              if(product >= 0) {
-                this.productList.splice(product, 1)
-              }
-            }
-          })
-          .catch(err => console.log(err.response.data))
+          this.eliminarProductoAPI(index)
       }
-    }
+    },
   },
+  computed: {
+    showLoading() {
+      return this.checkLoading()
+    }
+  }
 }
 </script>
 <style scoped>

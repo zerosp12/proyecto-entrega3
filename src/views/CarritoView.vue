@@ -1,11 +1,13 @@
 <template>
   <div>
+    <ModalMessage :Mensaje="mensajeTexto" :Tipo="mensajeTipo" :MostrarMensaje="mensajeMostrar"
+      @cerrarMensaje="cerrarMensaje" />
     <h1 class="pt-4" >
       <i class="fas fa-shopping-cart mr-2"></i> Carrito de Compras
     </h1>
     <hr class="mt-4 mb-4" />
     <div class="user-select-none">
-      <div v-if="cartList.length == 0">
+      <div v-if="obtenerContador == 0">
         <div class="alert alert-warning" role="alert">
           <i class="fas fa-exclamation-circle"></i> El carrito de compras se
           encuentra vacío...
@@ -22,28 +24,28 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in cartList" :key="index">
+            <tr v-for="(item, index) in obtenerCarrito()" :key="index">
               <td scope="row">{{ obtenerNombreProducto(item.id_producto) }}</td>
               <td>{{ item.cantidad }}</td>
               <td>
                 <button
                   type="button"
                   class="btn btn-sm btn-light"
-                  @click="callSumarProducto(item.id_producto)"
+                  @click="sumarProducto(item.id_producto)"
                 >
                   <i class="fas fa-plus"></i>
                 </button>
                 <button
                   type="button"
                   class="btn btn-sm btn-light"
-                  @click="callRestarProducto(item.id_producto)"
+                  @click="restarProducto(item.id_producto)"
                 >
                   <i class="fas fa-minus"></i>
                 </button>
                 <button
                   type="button"
                   class="btn btn-sm btn-danger"
-                  @click="callBorrarProducto(item.id_producto)"
+                  @click="borrarProducto(item.id_producto)"
                 >
                   <i class="fas fa-trash"></i>
                 </button>
@@ -54,14 +56,14 @@
           <tbody>
             <tr>
               <td colspan="4" class="value-total">
-                Precio Total: $ <span>{{ sumaTotal }}</span>
+                Precio Total: $ <span>{{ obtenerPrecioTotal }}</span>
               </td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td colspan="2" class="p-2 text-start">
-                <button type="button" class="btn btn-danger me-2" @click="callLimpiarCarrito()"><i class="fas fa-trash"></i> Limpiar Carrito</button>
+                <button type="button" class="btn btn-danger me-2" @click="limpiarCarrito()"><i class="fas fa-trash"></i> Limpiar Carrito</button>
                 
               </td>
               <td colspan="2" class="value-total p-2">
@@ -80,69 +82,59 @@
     </div>
   </div>
 </template>
-
 <script>
-import axios from "axios";
-import { MixinCarrito } from "@/mixins/mixin.carrito.js";
-
-let URL_PRODUCTOS = "https://639a60473a5fbccb5265ab59.mockapi.io/productos";
-//let URL_CARRITO = "https://639a60473a5fbccb5265ab59.mockapi.io/carrito";
+import { MixinMensajes } from "@/mixins/mixin.messages.js"
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: "CartView.vue",
-  mixins: [MixinCarrito],
-
+  mixins: [MixinMensajes],
   data() {
     return {
-      cartList: [],
-      productList: [],
+      productos: [],
       clientID: "",
-      showLoading: false,
     };
   },
   created() {
-    this.cartList = this.obtenerStorage();
 
-    axios
-      .get(URL_PRODUCTOS)
-      .then((productos) => {
-        this.productList = productos.data;
-      })
-      .catch((err) => console.log(err.response.data));
+    this.productos = this.obtenerProductos();
   },
   methods: {
+    ...mapGetters('productos', ['obtenerProductos']),
+    ...mapGetters('carrito', ['obtenerCarrito']),
+    ...mapMutations('carrito', ['sumarProducto', 'restarProducto', 'borrarProducto', 'limpiarCarrito']),
+
     obtenerNombreProducto(index) {
-      let producto = this.productList.find((x) => x.id == index);
+      let producto = this.productos.find((x) => x.id == index);
       return producto ? producto.nombre : "Sin nombre!";
     },
-    callSumarProducto(index) {
-        this.sumarProducto(index)
-        this.cartList = this.obtenerStorage()
+
+    finalizarPedido() {
+
+      let pedido = {
+        usuario: localStorage.clientID,
+        nombre: localStorage.clientName,
+        direccion: localStorage.clientAddress,
+        productos: []
+      }
+
+      this.obtenerCarrito().forEach(x => {
+
+        pedido.productos.push({
+            id_producto: Number(x.id_producto),
+            cantidad: Number(x.cantidad),
+            precio: Number(x.precio),
+        })
+        
+      })
+
+      this.$store.dispatch('carrito/terminarPedido', pedido)
+      this.crearMensaje(1, "Su pedido fue cargado exitosamente! En breve haremos el envío.")
+      this.limpiarCarrito()
     },
-    callRestarProducto(index) {
-        this.restarProducto(index)
-        this.cartList = this.obtenerStorage()
-    },
-    callBorrarProducto(index) {
-        this.borrarProducto(index)
-        this.cartList = this.obtenerStorage()
-    },
-    callLimpiarCarrito() {
-        this.limpiarCarrito()
-        this.cartList = this.obtenerStorage()
-    },
-    finalizarPedido() {},
   },
   computed: {
-    sumaTotal() {
-      let precio = 0;
-
-      this.cartList.forEach(function (a) {
-        precio += Number(a.precio * a.cantidad);
-      });
-
-      return precio;
-    },
+    ...mapGetters('carrito', ['obtenerContador', 'obtenerPrecioTotal']),
   },
 };
 </script>

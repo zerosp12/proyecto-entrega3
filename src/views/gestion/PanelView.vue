@@ -9,6 +9,9 @@
         <li class="nav-item">
             <router-link class="nav-link" to="/gestion/productos">Productos</router-link>
         </li>
+        <li class="nav-item">
+            <router-link class="nav-link" to="/gestion/pedidos">Pedidos</router-link>
+        </li>
     </ul>
     <router-view class="mt-4 p-4 border rounded" />
   </div>

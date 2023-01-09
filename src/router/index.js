@@ -18,57 +18,65 @@ const routes = [
   {
     path: '/productos',
     name: 'productos',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ProductosView.vue')
+    component: () => import('../views/ProductosView.vue')
   },
   {
     path: '/carrito',
     name: 'carrito',
-    component: () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue'),
+    component: () => import('../views/LoginView.vue'),
   },
   {
     path: '/carrito/:id',
     name: 'carrito_id',
-    component: () => import(/* webpackChunkName: "about" */ '../views/CarritoView.vue'),
+    component: () => import('../views/CarritoView.vue'),
   },
   {
     path: '/logout',
     name: 'logout',
-    component: () => import(/* webpackChunkName: "about" */ '../views/LogoutView.vue')
+    component: () => import('../views/LogoutView.vue')
   },
   {
     path: '/registro',
     name: 'registro',
-    component: () => import(/* webpackChunkName: "about" */ '../views/RegistroView.vue')
+    component: () => import('../views/RegistroView.vue')
   },
   {
     path: '/producto/:id',
     name: 'producto',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ProductoView.vue')
+    component: () => import('../views/ProductoView.vue')
   },
   {
     path: '/gestion',
     name: 'gestion',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PanelView.vue'),
+    component: () => import('../views/gestion/PanelView.vue'),
     children: [
       {
         path: '/gestion/usuarios',
-        component: () => import(/* webpackChunkName: "about" */ '../views/gestion/UsuariosLista.vue'),
+        component: () => import('../views/gestion/UsuariosLista.vue'),
       },
       {
         path: '/gestion/usuarios/editar/:id',
-        component: () => import(/* webpackChunkName: "about" */ '../views/gestion/UsuariosEditar.vue'),
+        component: () => import('../views/gestion/UsuariosEditar.vue'),
       },
       {
         path: '/gestion/productos',
-        component: () => import(/* webpackChunkName: "about" */ '../views/gestion/ProductosLista.vue'),
+        component: () => import('../views/gestion/ProductosLista.vue'),
       },
       {
         path: '/gestion/productos/nuevo',
-        component: () => import(/* webpackChunkName: "about" */ '../views/gestion/ProductoNuevo.vue'),
+        component: () => import('../views/gestion/ProductoNuevo.vue'),
       },
       {
         path: '/gestion/productos/editar/:id',
-        component: () => import(/* webpackChunkName: "about" */ '../views/gestion/ProductoEditar.vue'),
+        component: () => import('../views/gestion/ProductoEditar.vue'),
+      },
+      {
+        path: '/gestion/pedidos',
+        component: () => import('../views/gestion/PedidosLista.vue'),
+      },
+      {
+        path: '/gestion/pedidos/ver/:id',
+        component: () => import('../views/gestion/PedidosVer.vue'),
       }
     ]
   }
