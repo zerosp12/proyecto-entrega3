@@ -1,23 +1,13 @@
 <template>
   <div class="form-content">
-    <ModalMessage
-      :Mensaje="mensajeTexto"
-      :Tipo="mensajeTipo"
-      :MostrarMensaje="mensajeMostrar"
-      @cerrarMensaje="cerrarMensaje"
-    />
+    <ModalMessage :Mensaje="mensajeTexto" :Tipo="mensajeTipo" :MostrarMensaje="mensajeMostrar"
+      @cerrarMensaje="cerrarMensaje" />
     <ModuleTitle moduloTitulo="Tu Cuenta" moduloIcono="fas fa-user" />
     <vue-form :state="loginform" @submit.prevent="enviarLogin()">
       <validate auto-label class="form-group required-field mb-3">
         <label class="form-label">Usuario</label>
-        <input
-          v-model="model.username"
-          type="text"
-          name="username"
-          class="form-control"
-          :class="obtenerClassEstado(loginform.username)"
-          required
-        />
+        <input v-model="model.username" type="text" name="username" class="form-control"
+          :class="obtenerClassEstado(loginform.username)" required />
         <field-messages name="username" show="$touched || $submitted">
           <div slot="required" class="text-danger">
             Debes ingresar un Usuario
@@ -26,23 +16,19 @@
       </validate>
       <validate auto-label class="form-group required-field mb-3">
         <label class="form-label" for="password">Contraseña</label>
-        <input
-          v-model="model.password"
-          type="password"
-          name="password"
-          class="form-control"
-          :class="obtenerClassEstado(loginform.password)"
-          required
-        />
+        <input v-model="model.password" type="password" name="password" class="form-control"
+          :class="obtenerClassEstado(loginform.password)" required />
         <field-messages name="password" show="$touched || $submitted">
           <div slot="required" class="text-danger">
             Debes ingresar una Contraseña
           </div>
         </field-messages>
       </validate>
-      <button type="submit" class="btn btn-primary btn-block mb-4">
-        Ingresar
-      </button>
+      <div class=" d-grid gap-2">
+        <button type="submit" class="btn btn-warning fw-bold mb-4">
+          Ingresar
+        </button>
+      </div>
       <div class="text-center">
         <p>
           No eres miembro?
@@ -79,7 +65,7 @@ export default {
   },
   created() {
 
-    if(localStorage.isLogin == true) {
+    if (localStorage.isLogin == true) {
 
       this.$router.push('/productos')
       return;
@@ -89,11 +75,11 @@ export default {
   },
   methods: {
     ...mapGetters('usuarios', ['obtenerUsuarios']),
-    
+
     enviarLogin() {
 
       let info = this.usuarios.find((x) =>
-          x.usuario == this.model.username && x.password == this.model.password
+        x.usuario == this.model.username && x.password == this.model.password
       );
 
       console.log(this.usuarios)
@@ -110,7 +96,7 @@ export default {
 
         this.$router.push((info.privilegios == 1) ? 'gestion' : 'productos')
 
-        setTimeout(()=>{ this.$router.go(0) }, 100)
+        setTimeout(() => { this.$router.go(0) }, 100)
 
       } else {
         this.crearMensaje(2, "Los datos ingresados no son correctos");

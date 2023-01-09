@@ -74,9 +74,11 @@
         <input v-model="model.privilegios" class="form-check-input" type="checkbox" name="privilegios" />
         <label class="chkbox-label"> Cuenta con Privilegios?</label>
       </validate>
-      <button type="submit" class="btn btn-success btn-block mb-3">
-        Registrar Cuenta
-      </button>
+      <div class=" d-grid gap-2">
+        <button type="submit" class="btn btn-warning fw-bold mb-4">
+          Registrar Cuenta
+        </button>
+      </div>
     </vue-form>
   </div>
 </template>
@@ -137,31 +139,31 @@ export default {
 
         this.$store.dispatch('usuarios/agregarUsuarioAPI', usuario)
 
-        .then(resultado => {
-          if (resultado.status == 201) {
-            this.model = {
-              nombre: "",
-              usuario: "",
-              password: "",
-              repassword: "",
-              email: "",
-              privilegios: 0,
+          .then(resultado => {
+            if (resultado.status == 201) {
+              this.model = {
+                nombre: "",
+                usuario: "",
+                password: "",
+                repassword: "",
+                email: "",
+                privilegios: 0,
+              }
+
+              this.crearMensaje(1, "La cuenta fue creada exitosamente")
+              this.regform._reset()
+
+              setTimeout(() => {
+                this.$router.push("/login")
+              }, 1000)
+
+            } else {
+              this.crearMensaje(
+                2,
+                "Se produjo un error al intentar crear la cuenta"
+              )
             }
-
-            this.crearMensaje(1, "La cuenta fue creada exitosamente")
-            this.regform._reset()
-
-            setTimeout(() => {
-              this.$router.push("/login")
-            }, 1000)
-
-          } else {
-            this.crearMensaje(
-              2,
-              "Se produjo un error al intentar crear la cuenta"
-            )
-          }
-        })
+          })
           .catch(err => console.log(err.response.data))
           .finally(fin => console.log(fin))
       }
