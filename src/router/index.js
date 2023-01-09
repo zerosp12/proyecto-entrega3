@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LoginView from '../views/LoginView.vue'
+import ProductsView from '../views/ProductosView.vue'
 
 Vue.use(VueRouter)
 
@@ -8,17 +8,17 @@ const routes = [
   {
     path: '/',
     name: 'inicio',
-    component: LoginView
+    component: ProductsView,
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: () => import('../views/LoginView.vue')
   },
   {
     path: '/productos',
     name: 'productos',
-    component: () => import('../views/ProductosView.vue')
+    component: ProductsView,
   },
   {
     path: '/carrito',

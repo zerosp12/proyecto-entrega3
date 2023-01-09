@@ -17,7 +17,7 @@
           </button>
           <div class="collapse navbar-collapse" id="collapseMenu">
             <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-              <li v-if="isLogin && userPrivileges == 0" class="nav-item">
+              <li v-if="userPrivileges == 0" class="nav-item">
                 <router-link class="nav-link" to="/productos">
                   <i class="fas fa-motorcycle mr-2"></i> Delivery
                 </router-link>
@@ -79,7 +79,7 @@ export default {
   },
   created() {
     this.linkCarrito = "/carrito";
-    
+
     if (localStorage.isLogin !== undefined) {
       this.isLogin = JSON.parse(localStorage.isLogin); //Sino toma String (Gracias Google)
 

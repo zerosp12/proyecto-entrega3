@@ -11,13 +11,13 @@
         <h6 class="pt-3 pb-2">Stock Disponible: {{ producto.count }}</h6>
         <button
           type="button"
-          class="btn btn-primary me-2"
+          class="btn btn-success me-2 fw-bold"
           @click="$router.go(-1)"
         >
           <i class="fas fa-chevron-left"></i> Volver
         </button>
         <button
-          class="btn fw-bold btn-sm btn-warning py-2"
+          class="btn fw-bold btn-sm btn-warning py-2 fw-bold"
           :disabled="chequearBoton"
           @click.prevent="addProductToCart($event)"
         >

@@ -5,7 +5,14 @@
       <LoadingSpinner />
     </div>
     <div v-else class="row">
-      <TarjetaProductos v-for="(product, index) in obtenerProductos()" :key="index" :producto="product" />
+      <div class="col-8">
+        <div class="row">
+          <TarjetaProductos v-for="(product, index) in obtenerProductos()" :key="index" :producto="product" />
+        </div>
+      </div>
+      <div class="col-4">
+        <CarritoChico />
+      </div>
     </div>
   </div>
 </template>
@@ -14,6 +21,8 @@
 import TarjetaProductos from '@/components/TarjetaProductos.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import ModuleTitle from '@/components/ModuleTitle.vue'
+import CarritoChico from '@/components/CarritoChico.vue'
+
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -22,7 +31,8 @@ export default {
   components: {
     TarjetaProductos,
     LoadingSpinner,
-    ModuleTitle
+    ModuleTitle,
+    CarritoChico
   },
   created() {
     this.obtenerProductosAPI();

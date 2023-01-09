@@ -2,7 +2,7 @@
   <div>
     <ModalMessage :Mensaje="mensajeTexto" :Tipo="mensajeTipo" :MostrarMensaje="mensajeMostrar"
       @cerrarMensaje="cerrarMensaje" />
-    <h1 class="pt-4" >
+    <h1 class="pt-4">
       <i class="fas fa-shopping-cart mr-2"></i> Carrito de Compras
     </h1>
     <hr class="mt-4 mb-4" />
@@ -28,25 +28,13 @@
               <td scope="row">{{ obtenerNombreProducto(item.id_producto) }}</td>
               <td>{{ item.cantidad }}</td>
               <td>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-light"
-                  @click="sumarProducto(item.id_producto)"
-                >
+                <button type="button" class="btn btn-sm btn-light" @click="sumarProducto(item.id_producto)">
                   <i class="fas fa-plus"></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-light"
-                  @click="restarProducto(item.id_producto)"
-                >
+                <button type="button" class="btn btn-sm btn-light" @click="restarProducto(item.id_producto)">
                   <i class="fas fa-minus"></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-danger"
-                  @click="borrarProducto(item.id_producto)"
-                >
+                <button type="button" class="btn btn-sm btn-danger" @click="borrarProducto(item.id_producto)">
                   <i class="fas fa-trash"></i>
                 </button>
               </td>
@@ -63,15 +51,12 @@
           <tbody>
             <tr>
               <td colspan="2" class="p-2 text-start">
-                <button type="button" class="btn btn-danger me-2" @click="limpiarCarrito()"><i class="fas fa-trash"></i> Limpiar Carrito</button>
-                
+                <button type="button" class="btn btn-danger me-2 fw-bold" @click="limpiarCarrito()"><i class="fas fa-trash"></i>
+                  Limpiar Carrito</button>
+
               </td>
               <td colspan="2" class="value-total p-2">
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  @click="finalizarPedido()"
-                >
+                <button type="button" class="btn btn-success fw-bold" @click="finalizarPedido()">
                   <i class="fas fa-shopping-cart"></i> Finalizar Pedido
                 </button>
               </td>
@@ -121,11 +106,11 @@ export default {
       this.obtenerCarrito().forEach(x => {
 
         pedido.productos.push({
-            id_producto: Number(x.id_producto),
-            cantidad: Number(x.cantidad),
-            precio: Number(x.precio),
+          id_producto: Number(x.id_producto),
+          cantidad: Number(x.cantidad),
+          precio: Number(x.precio),
         })
-        
+
       })
 
       this.$store.dispatch('carrito/terminarPedido', pedido)
@@ -146,6 +131,7 @@ export default {
   margin-left: 5px;
   border: #ccc solid 1px;
 }
+
 .value-total {
   text-align: right;
   font-size: 1.8em;
