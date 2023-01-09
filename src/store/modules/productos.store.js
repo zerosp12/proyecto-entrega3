@@ -13,7 +13,7 @@ export default {
         obtenerProductos(state) {
             return state.productos
         },
-        obtenerContador(state) {
+        obtenerCantidadProductos(state) {
             return state.productos.length
         },
         checkLoading(state) {

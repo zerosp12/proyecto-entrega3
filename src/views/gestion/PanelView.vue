@@ -2,6 +2,24 @@
   <div>
     <h1 class="pt-4"><i class="fas fa-users-cog mr-2"></i> Panel de Gestión</h1>
     <hr class="mt-4 mb-4" />
+    <div class="row mb-4">
+        <div class="col-3 p-2 text-center border fw-bold text-dark" style="background-color: #b691e1">
+            <i class="fas fa-user p-3" style="font-size: 3rem"></i>
+            <p>Usuarios Registrados: </p>
+            <h2>{{ obtenerCantidadUsuarios }}</h2>
+        </div>
+        <div class="col-3 p-2 text-center border fw-bold text-dark" style="background-color: #b691e1">
+            <i class="fas fa-box p-3" style="font-size: 3rem"></i>
+            <p>Productos Ingresados: </p>
+            <h2>{{ obtenerCantidadProductos }}</h2>
+        </div>
+        <div class="col-3 p-2 text-center border fw-bold text-dark" style="background-color: #b691e1">
+            <i class="fas fa-motorcycle p-3" style="font-size: 3rem"></i>
+            <p>Pedidos Pendientes: </p>
+            <h2>{{ obtenerCantidadPedidos }}</h2>
+        </div>
+    </div>
+    <hr>
     <ul class="nav nav-pills">
         <li class="nav-item">
             <router-link class="nav-link" to="/gestion/usuarios">Usuarios</router-link>
@@ -16,6 +34,19 @@
     <router-view class="mt-4 p-4 border rounded" />
   </div>
 </template>
+<script>
+import { mapGetters } from 'vuex';
+
+export default {
+    name: 'PanelView',
+    computed: {
+        ... mapGetters('pedidos', ['obtenerCantidadPedidos']),
+        ... mapGetters('usuarios', ['obtenerCantidadUsuarios']),
+        ... mapGetters('productos', ['obtenerCantidadProductos'])
+    }
+}
+</script>
+
 <style scoped>
 .nav-link {
     margin-right: 10px;

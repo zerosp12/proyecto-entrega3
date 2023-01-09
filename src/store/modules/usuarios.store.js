@@ -13,7 +13,7 @@ export default {
         obtenerUsuarios(state) {
             return state.usuario
         },
-        obtenerContador(state) {
+        obtenerCantidadUsuarios(state) {
             return state.usuario.length
         },
         checkLoading(state) {

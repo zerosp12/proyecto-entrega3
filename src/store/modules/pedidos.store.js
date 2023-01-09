@@ -13,7 +13,7 @@ export default {
         obtenerPedidos(state) {
             return state.pedidos
         },
-        obtenerContador(state) {
+        obtenerCantidadPedidos(state) {
             return state.pedidos.length
         },
         checkLoading(state) {
