@@ -8,7 +8,7 @@
     <hr class="mt-4 mb-4" />
     <div class="user-select-none">
       <div v-if="obtenerContador == 0">
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-info" role="alert">
           <i class="fas fa-exclamation-circle"></i> El carrito de compras se
           encuentra vacío...
         </div>
@@ -95,6 +95,12 @@ export default {
     },
 
     finalizarPedido() {
+
+      if(localStorage.isLogin == false)
+      {
+        this.$router.push('/login')
+        return;
+      }
 
       let pedido = {
         usuario: localStorage.clientID,
