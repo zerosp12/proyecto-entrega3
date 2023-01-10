@@ -136,7 +136,7 @@ export default {
   line-height: 25px;
   margin-left: 5px;
   border: 0px;
-  background-color: transparent+;
+  background-color: transparent;
 }
 
 .value-total {
