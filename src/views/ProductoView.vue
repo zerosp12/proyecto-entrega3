@@ -63,7 +63,7 @@ export default {
     ...mapMutations('carrito', ['insertarProducto']),
 
     addProductToCart(event) {
-      if (JSON.parse(localStorage.isLogin)) {
+      if (localStorage.isLogin == true) {
         this.botonActivo = true;
 
         var target = event.currentTarget;
