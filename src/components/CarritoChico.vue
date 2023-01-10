@@ -17,13 +17,13 @@
                   $ {{ item.precio * item.cantidad }}
                 </div>
                 <div class="col-6 text-end">
-                  <button type="button" class="btn btn-sm btn-sm-bis btn-light" @click="sumarProducto(item.id_producto)">
+                  <button type="button" class="btn btn-sm btn-sm-bis" @click="sumarProducto(item.id_producto)">
                     <i class="fas fa-plus"></i>
                   </button>
-                  <button type="button" class="btn btn-sm btn-sm-bis btn-light" @click="restarProducto(item.id_producto)">
+                  <button type="button" class="btn btn-sm btn-sm-bis" @click="restarProducto(item.id_producto)">
                     <i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-sm btn-sm-bis btn-danger" @click="borrarProducto(item.id_producto)">
+                  <button type="button" class="btn btn-sm btn-sm-bis text-danger" @click="borrarProducto(item.id_producto)">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
@@ -83,6 +83,7 @@ export default {
   width: 23px;
   line-height: 23px;
   margin-left: 5px;
-  border: #ccc solid 1px;
+  background-color: transparent;
+  border: 0px
 }
 </style>

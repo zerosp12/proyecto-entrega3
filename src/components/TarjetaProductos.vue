@@ -1,17 +1,21 @@
 <template>
   <div class="col-md-4 py-2 mb-3">
-      <div class="card h-100 text-center user-select-none" @click="verProducto(producto.id)">
-        <img :src="producto.image" class="card-img-top" />
-        <div class="card-body">
-          <h6 class="card-title fw-bold">{{ producto.nombre }}</h6>
-        </div>
-        <div class="card-footer d-grid gap-2">
-          <button class="btn fw-bold btn-sm btn-warning py-2" :disabled="chequearBoton"
-            @click.prevent="addProductToCart($event)">
+    <div class="card h-100 text-center user-select-none">
+      <img :src="producto.image" class="card-img-top" />
+      <div class="card-body">
+        <h6 class="card-title fw-bold">{{ producto.nombre }}</h6>
+      </div>
+      <div class="card-footer d-grid gap-2">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn fw-bold btn-sm btn-danger py-2 fs-6" @click.prevent="addProductToCart($event)">
             <i class="fas fa-shopping-cart mr-2 btn-block"></i> $ {{ producto.precio }}
+          </button>
+          <button type="button" class="btn btn-warning fw-bold" @click="verProducto(producto.id)">
+            + Info
           </button>
         </div>
       </div>
+    </div>
   </div>
 </template>
 <script>
@@ -41,10 +45,13 @@ export default {
       }
     },
     addProductToCart(event) {
+      if (this.botonActivo == true) return;
+
       this.botonActivo = true;
 
-      var target = event.currentTarget;
-      target.innerHTML = '<i class="fas fa-check mr-2"></i> <b>Agregado!</b>';
+      var target = event.currentTarget
+      const currentHTML = target.innerHTML
+      target.innerHTML = '<i class="fas fa-check mr-2"></i> <b>Agregado!</b>'
 
       this.insertarProducto({
         id_producto: Number(this.producto.id),
@@ -54,10 +61,9 @@ export default {
       });
 
       setTimeout(() => {
-        target.innerHTML =
-          '<i class="fas fa-shopping-cart mr-2"></i> Agregar al Carrito';
-        this.botonActivo = false;
-      }, 800);
+        target.innerHTML = currentHTML
+        this.botonActivo = false
+      }, 500);
     },
   },
 };
@@ -76,19 +82,20 @@ a {
   text-decoration: none;
   color: #333;
 }
-
 .row>* {
   padding: 4px !important;
 }
-
 .card:hover {
   cursor: pointer;
   box-shadow: 0px 0px 6px 2px #bbb;
 }
-
 .card-footer {
   background-color: white !important;
   border-top: 0px;
   padding-bottom: 20px;
+}
+.card-img, .card-img-bottom, .card-img-top {
+    width: 100%;
+    height: 100%;
 }
 </style>
