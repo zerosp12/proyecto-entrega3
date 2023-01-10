@@ -28,13 +28,13 @@
               <td scope="row">{{ obtenerNombreProducto(item.id_producto) }}</td>
               <td>{{ item.cantidad }}</td>
               <td>
-                <button type="button" class="btn btn-sm btn-light" @click="sumarProducto(item.id_producto)">
+                <button type="button" class="btn btn-sm" @click="sumarProducto(item.id_producto)">
                   <i class="fas fa-plus"></i>
                 </button>
-                <button type="button" class="btn btn-sm btn-light" @click="restarProducto(item.id_producto)">
+                <button type="button" class="btn btn-sm" @click="restarProducto(item.id_producto)">
                   <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" @click="borrarProducto(item.id_producto)">
+                <button type="button" class="btn btn-sm text-danger" @click="borrarProducto(item.id_producto)">
                   <i class="fas fa-trash"></i>
                 </button>
               </td>
@@ -135,7 +135,8 @@ export default {
   width: 25px;
   line-height: 25px;
   margin-left: 5px;
-  border: #ccc solid 1px;
+  border: 0px;
+  background-color: transparent+;
 }
 
 .value-total {
