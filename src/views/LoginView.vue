@@ -93,10 +93,10 @@ export default {
         localStorage.clientAddress = info.direccion
         localStorage.clientName = info.nombre
         localStorage.avatarPath = info.avatar
-        
+
         this.$router.push((info.privilegios == 1) ? 'gestion' : 'productos')
 
-        setTimeout(() => { this.$router.go(0) }, 100)
+        //setTimeout(() => { this.$router.go(0) }, 100)
 
       } else {
         this.crearMensaje(2, "Los datos ingresados no son correctos");
