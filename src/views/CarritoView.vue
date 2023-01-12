@@ -111,9 +111,9 @@ export default {
       if (this.botonActivo == true) return;
 
       let pedido = {
-        usuario: this.obtenerId,
-        nombre: this.obtenerNombre,
-        direccion: this.obtenerDireccion,
+        usuario: this.obtenerId(),
+        nombre: this.obtenerNombre(),
+        direccion: this.obtenerDireccion(),
         productos: []
       }
 
