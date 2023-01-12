@@ -21,7 +21,7 @@
       <label for="descripcion" class="form-label">Descripción</label>
       <textarea
         name="descripcion"
-        rows="3"
+        rows="6"
         class="form-control"
         placeholder="Descripción"
         v-model="producto.descripcion"
@@ -62,10 +62,10 @@
           <div slot="required" class="text-danger">Debes ingresar una Imagen</div>
       </field-messages>
     </validate>
-    <button type="button" class="btn btn-warning" @click="$router.go(-1)">
+    <button type="button" class="btn btn-warning btn-sm fw-bold" @click="$router.go(-1)">
       <i class="fas fa-chevron-left"></i> Volver
     </button>
-    <button type="submit" class="btn btn-success">
+    <button type="submit" class="btn btn-success btn-sm fw-bold">
       {{ textoBoton }}
     </button>
     </vue-form>

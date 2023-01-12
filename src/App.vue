@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavbarMenu />
-    <router-view class="container mb-4"/>
+    <router-view class="container mb-4 p-3"/>
     <FooterMain />
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-size: 0.9em;
-  margin-top: 80px;
+  margin-top: 65px;
   margin-bottom: 100px;
 }
 html, body {

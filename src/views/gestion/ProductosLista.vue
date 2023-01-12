@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="mb-4">> Administrar Productos</h3>
-    <router-link to="/gestion/productos/nuevo" class="btn btn-success mb-4">Nuevo Producto</router-link>
+    <router-link to="/gestion/productos/nuevo" class="btn btn-success mb-4 fw-bold btn-sm"><i class="fas fa-plus"></i> Nuevo Producto</router-link>
     <div v-if="showLoading" class="text-center">
       <LoadingSpinner />
     </div>

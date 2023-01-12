@@ -46,7 +46,7 @@ export default {
         }
 
         if (this.obtenerPrivilegios() == 0) {
-            this.$router.push('/productos')
+            this.$router.push('/login')
             return;
         }
     },
@@ -66,7 +66,8 @@ export default {
     margin-right: 10px;
     border: #CCC solid 1px;
     color: #666;
-    padding: 8px 30px;
+    padding: 8px 15px;
+    display: inline-block;
 }
 
 .router-link-active,

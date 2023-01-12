@@ -3,14 +3,14 @@
     <ModalMessage :Mensaje="mensajeTexto" :Tipo="mensajeTipo" :MostrarMensaje="mensajeMostrar"
       @cerrarMensaje="cerrarMensaje" />
     <h1 class="pt-4">
-      <i class="fas fa-shopping-cart mr-2"></i> Carrito de Compras
+      <i class="fas fa-shopping-cart mr-2"></i> Mi pedido
     </h1>
     <hr class="mt-4 mb-4" />
     <div class="user-select-none">
       <div v-if="obtenerContador == 0">
-        <div class="alert alert-info" role="alert">
-          <i class="fas fa-exclamation-circle"></i> El carrito de compras se
-          encuentra vacío...
+        <div class="text-center">
+          <img src="../assets/empty-order.svg">
+          <p class="pt-4 texto-carrito-vacio">Pedido Vacío</p>
         </div>
       </div>
       <div v-else class="table-responsive table-bordered">
@@ -159,7 +159,13 @@ export default {
   border: 0px;
   background-color: transparent;
 }
-
+.texto-carrito-vacio {
+  text-align: center;
+  font-size: 18px;
+  color: #b4b4b4;
+  font-weight: 400;
+  padding-right: 25px;
+}
 .value-total {
   text-align: right;
   font-size: 1.8em;

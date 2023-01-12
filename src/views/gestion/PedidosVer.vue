@@ -21,7 +21,7 @@
         </div>
         <h4 class="mt-4">> Pedido</h4>
         <div class="table-responsive">
-            <table class="table border text-center">
+            <table class="table border text-center tabla-overflow">
                 <thead>
                     <tr class="fw-bold bg-dark text-light">
                         <td>Producto</td>
@@ -43,11 +43,11 @@
                 </tbody>
             </table>
         </div>
-        <button type="button" class="btn btn-warning fw-bold" @click="$router.go(-1)">
+        <button type="button" class="btn btn-warning btn-sm fw-bold" @click="$router.go(-1)">
             <i class="fas fa-chevron-left"></i> Volver
         </button>
-        <button type="button" class="btn btn-success btn-xl fw-bold mx-2" @click="deleteItem(pedido.id)">
-            <i class="fas fa-check"></i> ENTREGADO!</button>
+        <button type="button" class="btn btn-success btn-xl btn-sm fw-bold mx-2" @click="deleteItem(pedido.id)">
+            <i class="fas fa-check"></i> MARCAR COMO ENTREGADO!</button>
     </div>
 </template>
 
@@ -99,13 +99,6 @@ export default {
 };
 </script>
 <style scoped>
-.btn-sm {
-  padding: 0px;
-  width: 25px;
-  line-height: 25px;
-  margin-left: 5px;
-  border: #ccc solid 1px;
-}
 .value-total {
   text-align: right;
   font-size: 1.8em;

@@ -3,8 +3,13 @@
     <ModalMessage :Mensaje="mensajeTexto" :Tipo="mensajeTipo" :MostrarMensaje="mensajeMostrar"
       @cerrarMensaje="cerrarMensaje" />
     <div class="user-select-none carrito-chiquito">
-      <div v-if="obtenerContador == 0" class="border p-3 rounded">
-        <i class="fas fa-exclamation-circle info"></i> Aquí podras ver los productos agregados al carrito...
+      <div v-if="obtenerContador == 0">
+        <h5 class="fw-bold"><i class="fas fa-shopping-cart px-2"></i> Mi pedido</h5>
+        <hr class="px-2">
+        <div class="text-center">
+          <img src="../assets/empty-order.svg">
+          <p class="pt-4">Pedido Vacío</p>
+        </div>
       </div>
       <div v-else>
         <h5 class="fw-bold"><i class="fas fa-shopping-cart px-2"></i> Mi pedido</h5>
@@ -35,8 +40,8 @@
           <h4>Precio Total: $ <span>{{ obtenerPrecioTotal }}</span></h4>
         </div>
         <div class="text-end my-3">
-          <button type="button" class="btn  btn-sm btn-success fw-bold" @click="irAlCarrito()">
-            <i class="fas fa-shopping-cart"></i> Finalizar Pedido</button>
+          <button type="button" class="btn  btn-sm btn-warning fw-bold" @click="irAlCarrito()">
+            <i class="fas fa-shopping-cart"></i> Ir al Carrito</button>
         </div>
       </div>
     </div>
@@ -96,6 +101,14 @@ export default {
   margin-left: 5px;
   background-color: transparent;
   border: 0px
+}
+
+.carrito-chiquito p {
+  text-align: center;
+  font-size: 18px;
+  color: #b4b4b4;
+  font-weight: 400;
+  padding-right: 25px;
 }
 
 @media (max-width: 1399px) {
