@@ -94,6 +94,8 @@ export default {
         localStorage.clientName = info.nombre
         localStorage.avatarPath = info.avatar
 
+        console.log(info)
+
         this.$router.push((info.privilegios == 1) ? 'gestion' : 'productos')
 
         setTimeout(() => { this.$router.go(0) }, 100)
