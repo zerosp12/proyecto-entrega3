@@ -13,10 +13,11 @@ export default {
 <style>
 footer {
     width: 100%;
-    height: 60px;
-    background-color: #333;
+    height: 50px;
+    background-color: #222;
     position: fixed;
     bottom: 0;
-    padding-top: 20px;
+    padding-top: 15px;
+    z-index: 9999;
 }
 </style>
