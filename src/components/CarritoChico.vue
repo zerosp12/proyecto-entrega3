@@ -4,7 +4,7 @@
       @cerrarMensaje="cerrarMensaje" />
     <div class="user-select-none carrito-chiquito">
       <div v-if="obtenerContador == 0" class="border p-3 rounded">
-        <i class="fas fa-exclamation-circle info"></i> Selecciona algún producto para agregar al carrito y realizar tu compra...
+        <i class="fas fa-exclamation-circle info"></i> Aquí podras ver los productos agregados al carrito...
       </div>
       <div v-else>
         <h5 class="fw-bold"><i class="fas fa-shopping-cart px-2"></i> Mi pedido</h5>

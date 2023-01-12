@@ -1,6 +1,6 @@
 <template>
     <footer class="text-center text-white">
-        Creado por José Antonio D'Estefano
+        Creado por José Antonio D'Estéfano
     </footer>
 </template>
 

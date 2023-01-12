@@ -73,7 +73,8 @@ export default {
     this.usuarios = this.obtenerUsuarios();
   },
   methods: {
-    ...mapGetters('usuarios', ['obtenerUsuarios', 'checkLogin']),
+    ...mapGetters('usuarios', ['obtenerUsuarios', 'checkLogin', 'obtenerId']),
+    ...mapGetters('carrito', ['obtenerContador']),
     ...mapMutations('usuarios', ['setearValoresLogin', 'setLogin']),
 
     enviarLogin() {
@@ -86,7 +87,13 @@ export default {
         this.setLogin(info)
         this.setearValoresLogin()
 
-        this.$router.push((info.privilegios == 1) ? 'gestion' : 'productos')
+        if (info.privilegios == 1) {
+          this.$router.push('/gestion')
+        }
+        else {
+          this.$router.push((this.obtenerContador() > 0) ? `/carrito/${this.obtenerId()}` : '/productos')
+        }
+        
       } else {
         this.crearMensaje(2, "Los datos ingresados no son correctos");
       }

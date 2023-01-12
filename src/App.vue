@@ -46,6 +46,6 @@ html, body {
   min-height: 100%;
 }
 .tabla-overflow {
-  min-width: 1000px;
+  min-width: 900px;
 }
 </style>

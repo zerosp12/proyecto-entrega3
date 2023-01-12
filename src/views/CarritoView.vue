@@ -28,23 +28,21 @@
               <td scope="row">{{ obtenerNombreProducto(item.id_producto) }}</td>
               <td>{{ item.cantidad }}</td>
               <td>
-                <button type="button" class="btn btn-sm" @click="sumarProducto(item.id_producto)">
+                <button type="button" class="btn btn-sm botones-chicos" @click="sumarProducto(item.id_producto)">
                   <i class="fas fa-plus"></i>
                 </button>
-                <button type="button" class="btn btn-sm" @click="restarProducto(item.id_producto)">
+                <button type="button" class="btn btn-sm botones-chicos" @click="restarProducto(item.id_producto)">
                   <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-sm text-danger" @click="borrarProducto(item.id_producto)">
+                <button type="button" class="btn btn-sm text-danger botones-chicos" @click="borrarProducto(item.id_producto)">
                   <i class="fas fa-trash"></i>
                 </button>
               </td>
               <td class="w-25">$ {{ item.precio }}</td>
             </tr>
           </tbody>
-
         </table>
       </div>
-
       <table class="table text-center">
         <thead>
             <tr>
@@ -56,12 +54,12 @@
         <tbody>
           <tr>
             <td colspan="2" class="p-2 text-start">
-              <button type="button" class="btn btn-danger me-2 fw-bold" @click="limpiarCarrito()"><i
+              <button type="button" class="btn btn-sm btn-danger fw-bold" @click="limpiarCarrito()"><i
                   class="fas fa-trash"></i>
                 Limpiar Carrito</button>
             </td>
-            <td colspan="2" class="value-total p-2">
-              <button type="button" class="btn btn-success fw-bold" @click="finalizarPedido()">
+            <td colspan="2" class="text-end p-2">
+              <button type="button" class="btn btn-sm btn-success fw-bold" @click="finalizarPedido()">
                 <i class="fas fa-shopping-cart"></i> Finalizar Pedido
               </button>
             </td>
@@ -153,7 +151,7 @@ export default {
 };
 </script>
 <style scoped>
-.btn-sm {
+.botones-chicos {
   padding: 0px;
   width: 25px;
   line-height: 25px;
