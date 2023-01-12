@@ -1,19 +1,19 @@
 # proyecto-entrega3
 
 ##
-## Usuarios: 
-## ----------------
+```
 ## Usuario normal
-## jose / 1234
-##
+jose / 1234
+```
 ##
 ## Usuario con privilegios
-## ethel / 1234
-##
-##
+```
+ethel / 1234
+```
 ## Deploy:
-## https://animated-shortbread-1bf748.netlify.app/#/
-
+```
+https://animated-shortbread-1bf748.netlify.app/#/
+```
 ## Project setup
 ```
 npm install
