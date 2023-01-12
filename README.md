@@ -1,8 +1,8 @@
 # proyecto-entrega3
 
 ##
-```
 ## Usuario normal
+```
 jose / 1234
 ```
 ##
