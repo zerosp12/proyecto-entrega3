@@ -43,7 +43,7 @@
           </tbody>
         </table>
       </div>
-      <table class="table text-center">
+      <table v-if="obtenerContador > 0" class="table text-center">
         <thead>
             <tr>
               <td colspan="4" class="value-total">
