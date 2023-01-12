@@ -7,7 +7,7 @@
       </div>
       <div class="card-footer d-grid gap-2">
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn fw-bold btn-sm btn-danger py-2 fs-6" @click.prevent="addProductToCart($event)">
+          <button type="button" class="btn fw-bold btn-sm py-2 fs-6 pedido" :class="botonActivo ? 'btn-success' : 'btn-danger'" @click.prevent="addProductToCart($event)">
             <i class="fas fa-shopping-cart mr-2 btn-block"></i> $ {{ producto.precio }}
           </button>
           <button type="button" class="btn btn-warning fw-bold" @click="verProducto(producto.id)">
@@ -97,5 +97,8 @@ a {
 .card-img, .card-img-bottom, .card-img-top {
     width: 100%;
     height: 100%;
+}
+.pedido {
+  width: 70%;
 }
 </style>

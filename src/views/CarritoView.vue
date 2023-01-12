@@ -82,6 +82,11 @@ export default {
   },
   created() {
 
+    if(localStorage.userPrivileges == 1) {
+      this.$router.push('/gestion')
+      return;
+    }
+
     this.productos = this.obtenerProductos();
   },
   methods: {

@@ -29,7 +29,6 @@
       <div class="alert alert-danger" role="alert">
         <strong>Error!</strong> No se pudo encontrar el producto solicitado ... :(
       </div>
-      
     </div>
   </div>
 </template>
@@ -45,12 +44,13 @@ export default {
     };
   },
   created() {
-    let index = this.$route.params.id;
- 
-    if(this.obtenerContador() == 0) {
-      this.obtenerProductosAPI()
-    }
     
+    if(localStorage.userPrivileges == 1) {
+      this.$router.push('/gestion')
+      return;
+    }
+
+    let index = this.$route.params.id;
     this.producto = this.obtenerProductos().find(x => x.id == index)
 
     if(this.producto == undefined) {
@@ -58,32 +58,31 @@ export default {
     }
   },
   methods: {
-    ...mapGetters('productos', ['obtenerProductos', 'obtenerContador']),
+    ...mapGetters('productos', ['obtenerProductos']),
     ...mapActions('productos', ['obtenerProductosAPI']),
     ...mapMutations('carrito', ['insertarProducto']),
 
     addProductToCart(event) {
-      if (localStorage.isLogin == true) {
-        this.botonActivo = true;
+      
+      if(this.botonActivo) return;
 
-        var target = event.currentTarget;
-        target.innerHTML = '<i class="fas fa-check mr-2"></i> <b>Agregado!</b>';
+      this.botonActivo = true;
 
-        this.insertarProducto({
-          id_producto: Number(this.producto.id),
-          precio: this.producto.precio,
-          cantidad: 1,
-          usuario: Number(localStorage.clientID),
-        });
+      var target = event.currentTarget;
+      target.innerHTML = '<i class="fas fa-check mr-2"></i> <b>Agregado!</b>';
 
-        setTimeout(() => {
-          target.innerHTML =
-            '<i class="fas fa-shopping-cart mr-2"></i> Agregar al Carrito';
-          this.botonActivo = false;
-        }, 300);
-      } else {
-        this.$router.push("/login");
-      }
+      this.insertarProducto({
+        id_producto: Number(this.producto.id),
+        precio: this.producto.precio,
+        cantidad: 1,
+        usuario: Number(localStorage.clientID),
+      });
+
+      setTimeout(() => {
+        target.innerHTML =
+          '<i class="fas fa-shopping-cart mr-2"></i> Agregar al Carrito';
+        this.botonActivo = false;
+      }, 300);
     },
   },
   computed: {

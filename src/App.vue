@@ -18,6 +18,9 @@ export default {
     this.cargarCarrito()
     this.obtenerProductosAPI()
     this.obtenerUsuariosAPI()
+
+    if(localStorage.userPrivileges == undefined)
+      localStorage.userPrivileges = 0
   },
   methods: {
     ...mapMutations('carrito', ['cargarCarrito']),
