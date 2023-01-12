@@ -10,6 +10,9 @@
 ## Usuario con privilegios
 ## ethel / 1234
 ##
+##
+## Deploy:
+## https://animated-shortbread-1bf748.netlify.app/#/
 
 ## Project setup
 ```
