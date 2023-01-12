@@ -4,13 +4,13 @@
     <div v-if="showLoading">
       <LoadingSpinner />
     </div>
-    <div v-else class="row">
-      <div class="col-8">
+    <div v-else class="row panel">
+      <div class="col-xs-6 col-xxl-8">
         <div class="row">
           <TarjetaProductos v-for="(product, index) in obtenerProductos()" :key="index" :producto="product" />
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-xs-6 col-xxl-4">
         <CarritoChico />
       </div>
     </div>
@@ -48,3 +48,15 @@ export default {
   }
 }
 </script>
+<style scoped>
+.panel {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1399px) {
+  .panel {
+      flex-direction: column-reverse;
+  }
+}
+</style>

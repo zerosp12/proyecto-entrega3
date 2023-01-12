@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-4 py-2 mb-3">
+  <div class="col-6 col-md-4 py-2 mb-3">
     <div class="card h-100 text-center user-select-none">
       <img :src="producto.image" class="card-img-top" />
       <div class="card-body">
@@ -7,10 +7,10 @@
       </div>
       <div class="card-footer d-grid gap-2">
         <div class="btn-group" role="group">
-          <button type="button" class="btn fw-bold btn-sm py-2 fs-6 pedido" :class="botonActivo ? 'btn-success' : 'btn-danger'" @click.prevent="addProductToCart($event)">
+          <button type="button" class="btn fw-bold btn-sm py-2 pedido" :class="botonActivo ? 'btn-success' : 'btn-danger'" @click.prevent="addProductToCart($event)">
             <i class="fas fa-shopping-cart mr-2 btn-block"></i> $ {{ producto.precio }}
           </button>
-          <button type="button" class="btn btn-warning fw-bold" @click="verProducto(producto.id)">
+          <button type="button" class="btn btn-warning fw-bold mas-info" @click="verProducto(producto.id)">
             + Info
           </button>
         </div>
@@ -78,7 +78,13 @@ export default {
   width: 95%;
   margin: 1% !important;
 }
-
+.pedido {
+  width: 60%;
+}
+.mas-info {
+    width: 30%;
+    font-size: 0.9em;
+}
 a {
   text-decoration: none;
   color: #333;
@@ -99,7 +105,21 @@ a {
     width: 100%;
     height: 100%;
 }
-.pedido {
-  width: 70%;
+
+@media (max-width: 1399px) {
+  .card {
+    width: 98%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .pedido {
+    width: 70%;
+    font-size: 1.2em;
+  }
+  .mas-info {
+    width: 30%;
+    font-size: 1.0em;
+  }
 }
 </style>

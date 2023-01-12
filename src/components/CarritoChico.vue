@@ -2,7 +2,7 @@
   <div>
     <ModalMessage :Mensaje="mensajeTexto" :Tipo="mensajeTipo" :MostrarMensaje="mensajeMostrar"
       @cerrarMensaje="cerrarMensaje" />
-    <div class="user-select-none">
+    <div class="user-select-none carrito-chiquito">
       <div v-if="obtenerContador == 0" class="border p-3 rounded">
         <i class="fas fa-exclamation-circle"></i> Selecciona algun producto para agregar al carrito
       </div>
@@ -86,5 +86,11 @@ export default {
   margin-left: 5px;
   background-color: transparent;
   border: 0px
+}
+
+@media (max-width: 1399px) {
+  .carrito-chiquito {
+    margin-bottom: 20px !important;
+  }
 }
 </style>
