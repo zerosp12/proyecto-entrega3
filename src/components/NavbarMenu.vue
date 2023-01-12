@@ -113,6 +113,7 @@ export default {
 <style scoped>
 .avatar {
   width: 40px;
+  height: 40px;
   margin-right: 10px;
   border: rgb(155, 85, 235) solid 2px;
 }
