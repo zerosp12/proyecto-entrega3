@@ -2,7 +2,12 @@
 
 ##
 ## Usuarios: 
+## ----------------
+## Usuario normal
 ## jose / 1234
+##
+##
+## Usuario con privilegios
 ## ethel / 1234
 ##
 
