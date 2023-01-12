@@ -17,18 +17,18 @@
           </button>
           <div class="collapse navbar-collapse" id="collapseMenu">
             <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-              <li v-if="userPrivileges == 0" class="nav-item">
+              <li v-if="obtenerPrivilegios() == 0" class="nav-item">
                 <router-link class="nav-link" to="/productos">
                   <i class="fas fa-motorcycle mr-2"></i> Delivery
                 </router-link>
               </li>
-              <li v-if="isLogin && userPrivileges == 0" class="nav-item">
+              <li v-if="checkLogin() && obtenerPrivilegios() == 0" class="nav-item">
                 <router-link class="nav-link" :to="linkCarrito">
                   <i class="fas fa-shopping-cart mr-2"></i> 
                   <span class="badge text-bg-warning">{{ obtenerCarritoCount }}</span>
                 </router-link>
               </li>
-              <li v-if="isLogin" class="nav-item">
+              <li v-if="checkLogin()" class="nav-item">
                 <router-link class="nav-link" to="/logout">
                   <i class="fas fa-user mr-2"></i> Salir
                 </router-link>
@@ -38,20 +38,20 @@
                   <i class="fas fa-user mr-2"></i> Ingresar!
                 </router-link>
               </li>
-              <li v-if="!isLogin">
+              <li v-if="!checkLogin()">
                 <router-link class="nav-link" to="/registro">
                   <i class="fas fa-user-plus mr-2"></i> Registrate
                 </router-link>
               </li>
-              <li v-if="isLogin && userPrivileges == 1">
+              <li v-if="checkLogin() && obtenerPrivilegios() == 1">
                 <router-link class="nav-link" to="/gestion">
                   <i class="fas fa-users-cog mr-2"></i> Panel de Gestión
                 </router-link>
               </li>
-              <li v-if="isLogin" class="px-2 avatar-container">
+              <li v-if="checkLogin()" class="px-2 avatar-container">
                 <div class="fw-bold text-white">
-                  <img :src="imagePath" class="rounded-circle avatar" />
-                  {{ clientName }}
+                  <img :src="obtenerAvatar()" class="rounded-circle avatar" />
+                  {{ obtenerNombre() }}
                 </div>
               </li>
             </ul>
@@ -69,40 +69,22 @@ export default {
   name: "NavbarMenu",
   data() {
     return {
-      isLogin: false,
-      clientName: "",
-      imagePath: "",
-      userPrivileges: 0,
       linkCarrito: "/carrito",
-      carritoCount: 0,
     };
   },
   created() {
     this.linkCarrito = "/carrito";
 
-    if (localStorage.isLogin !== undefined) {
-      this.isLogin = JSON.parse(localStorage.isLogin); //Sino toma String (Gracias Google)
+    if (this.checkLogin() != false) {
 
-      if (this.isLogin) {
-        this.clientName = localStorage.clientName;
-        this.imagePath = localStorage.avatarPath;
-        this.userPrivileges = localStorage.userPrivileges;
-        this.linkCarrito = `/carrito/${localStorage.clientID}`;
-        this.carritoCount = 0;
-      } else {
-        localStorage.isLogin = false;
-        localStorage.clientName = "";
-        localStorage.avatarPath = "";
-        localStorage.userPrivileges = 0;
-        localStorage.clientID = "";
-      }
+      this.linkCarrito = `/carrito/${this.obtenerId()}`;
     }
   },
   methods: {
     ...mapGetters('carrito', ['obtenerContador']),
+    ...mapGetters('usuarios', ['checkLogin', 'obtenerLogin', 'obtenerId', 'obtenerDireccion', 'obtenerAvatar', 'obtenerPrivilegios', 'obtenerNombre'])
   },
   computed: {
-
     obtenerCarritoCount() {
         return this.obtenerContador();
     },

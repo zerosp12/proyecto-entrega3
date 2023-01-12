@@ -43,7 +43,7 @@ import ModuleTitle from "@/components/ModuleTitle.vue";
 
 import { MixinForms } from "@/mixins/mixin.forms.js";
 import { MixinMensajes } from "@/mixins/mixin.messages.js";
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: "LoginView",
@@ -65,8 +65,7 @@ export default {
   },
   created() {
 
-    if (localStorage.isLogin == true) {
-
+    if (this.checkLogin() == true) {
       this.$router.push('/productos')
       return;
     }
@@ -74,7 +73,8 @@ export default {
     this.usuarios = this.obtenerUsuarios();
   },
   methods: {
-    ...mapGetters('usuarios', ['obtenerUsuarios']),
+    ...mapGetters('usuarios', ['obtenerUsuarios', 'checkLogin']),
+    ...mapMutations('usuarios', ['setearValoresLogin', 'setLogin']),
 
     enviarLogin() {
 
@@ -82,22 +82,11 @@ export default {
         x.usuario == this.model.username && x.password == this.model.password
       );
 
-      console.log(this.usuarios)
-
       if (info) {
-
-        localStorage.isLogin = Boolean(true)
-        localStorage.userPrivileges = Number(info.privilegios)
-        //--
-        localStorage.clientID = info.id
-        localStorage.clientAddress = info.direccion
-        localStorage.clientName = info.nombre
-        localStorage.avatarPath = info.avatar
+        this.setLogin(info)
+        this.setearValoresLogin()
 
         this.$router.push((info.privilegios == 1) ? 'gestion' : 'productos')
-
-        //setTimeout(() => { this.$router.go(0) }, 100)
-
       } else {
         this.crearMensaje(2, "Los datos ingresados no son correctos");
       }

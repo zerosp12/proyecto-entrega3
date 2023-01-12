@@ -5,6 +5,7 @@
 </template>
 <script>
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { mapMutations } from 'vuex'
 
 export default ({
     name: 'LogoutView',
@@ -12,8 +13,11 @@ export default ({
         LoadingSpinner
     },
     created() {
-        localStorage.isLogin = Boolean(false)
+        this.setLogout();
         window.location.href = '/'
+    },
+    methods: {
+        ...mapMutations('usuarios', ['setLogout']),
     }
 })
 </script>

@@ -18,13 +18,12 @@ export default {
     this.cargarCarrito()
     this.obtenerProductosAPI()
     this.obtenerUsuariosAPI()
-
-    if(localStorage.userPrivileges == undefined)
-      localStorage.userPrivileges = 0
+    this.setearValoresLogin()
   },
   methods: {
     ...mapMutations('carrito', ['cargarCarrito']),
     ...mapActions('productos', ['obtenerProductosAPI']),
+    ...mapMutations('usuarios', ['setearValoresLogin']),
     ...mapActions('usuarios', ['obtenerUsuariosAPI'])
   }
 };

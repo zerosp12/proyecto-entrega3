@@ -7,6 +7,14 @@ export default {
 
     state: {
         usuario: [], 
+        login: {
+            islogin: false,
+            id: 0,
+            direccion: '',
+            nombre: '',
+            avatar: '',
+            privilegios: 0,
+        },
         loading: true,
     },
     getters: {
@@ -18,9 +26,69 @@ export default {
         },
         checkLoading(state) {
             return state.loading
+        },
+        checkLogin(state) {
+            return state.login.islogin
+        },
+        obtenerId: (state) => state.login.id,
+        obtenerDireccion: (state) => state.login.direccion,
+        obtenerAvatar: (state) => state.login.avatar,
+        obtenerPrivilegios: (state) => state.login.privilegios,
+        obtenerNombre: (state) => state.login.nombre,
+        obtenerLogin(state) {
+            return state.login
         }
     },
     mutations: {
+        setearValoresLogin(state) {
+            const getStorageLogin = Boolean(localStorage.getItem('isLogin'))
+
+            if(getStorageLogin == true) {
+                state.login.islogin = getStorageLogin
+                state.login.privilegios =  Number(localStorage.getItem('userPrivileges'))
+                state.login.id = localStorage.getItem('clientID')
+                state.login.direccion = localStorage.getItem('clientAddress')
+                state.login.nombre = localStorage.getItem('clientName')
+                state.login.avatar = localStorage.getItem('avatarPath')
+            } else {
+                state.login.islogin = false
+            }
+        },
+        setLogin(state, info)
+        {
+            //Guardamos los valores en el storage para poder refrescar y que no cierre la sesion
+            localStorage.setItem('isLogin', Boolean(true))
+            localStorage.setItem('userPrivileges', Number(info.privilegios))
+            localStorage.setItem('clientID', info.id)
+            localStorage.setItem('clientAddress', info.direccion)
+            localStorage.setItem('clientName', info.nombre)
+            localStorage.setItem('avatarPath', info.avatar)
+
+            state.login.islogin = true
+            state.login.privilegios = info.privilegios
+            state.login.id = info.id
+            state.login.direccion = info.direccion
+            state.login.nombre = info.nombre
+            state.login.avatar = info.avatar
+        },
+        setLogout(state)
+        {
+            //Limpiamos los valores y el storage
+            state.login.islogin = false
+            state.login.privilegios =  0
+            state.login.id = 0
+            state.login.direccion = ''
+            state.login.nombre = ''
+            state.login.avatar = ''
+
+            //No usamos clear() para no limpiar el carrito
+            localStorage.removeItem('isLogin')
+            localStorage.removeItem('userPrivileges')
+            localStorage.removeItem('clientID')
+            localStorage.removeItem('clientAddress')
+            localStorage.removeItem('clientName')
+            localStorage.removeItem('avatarPath')
+        },
         cargarUsuarios(state, usuario_api) {
             state.usuario = usuario_api
             state.loading = false
