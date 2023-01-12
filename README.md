@@ -1,11 +1,10 @@
-# proyecto-entrega3
+# Proyecto Entrega 3
 
-##
+
 ## Usuario normal
 ```
 jose / 1234
 ```
-##
 ## Usuario con privilegios
 ```
 ethel / 1234
