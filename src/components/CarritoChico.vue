@@ -4,30 +4,31 @@
       @cerrarMensaje="cerrarMensaje" />
     <div class="user-select-none carrito-chiquito">
       <div v-if="obtenerContador == 0" class="border p-3 rounded">
-        <i class="fas fa-exclamation-circle"></i> Selecciona algun producto para agregar al carrito
+        <i class="fas fa-exclamation-circle info"></i> Selecciona algún producto para agregar al carrito y realizar tu compra...
       </div>
       <div v-else>
-        <h4 class="fw-bold">Mi pedido</h4>
+        <h5 class="fw-bold"><i class="fas fa-shopping-cart px-2"></i> Mi pedido</h5>
         <hr class="px-2">
         <div v-for="(item, index) in obtenerCarrito()" :key="index">
-            <div class="bordered border-bottom py-2">
-              <h5>{{ obtenerNombreProducto(item.id_producto) }} x <b>{{ item.cantidad }}</b></h5>
-              <div class="row">
-                <div class="col-6 fw-bold">
-                  $ {{ item.precio * item.cantidad }}
-                </div>
-                <div class="col-6 text-end">
-                  <button type="button" class="btn btn-sm btn-sm-bis" @click="sumarProducto(item.id_producto)">
-                    <i class="fas fa-plus"></i>
-                  </button>
-                  <button type="button" class="btn btn-sm btn-sm-bis" @click="restarProducto(item.id_producto)">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-sm btn-sm-bis text-danger" @click="borrarProducto(item.id_producto)">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-                </div>
+          <div class="bordered border-bottom py-2">
+            <h6>{{ obtenerNombreProducto(item.id_producto) }} x <b>{{ item.cantidad }}</b></h6>
+            <div class="row">
+              <div class="col-6 fw-bold">
+                $ {{ item.precio * item.cantidad }}
+              </div>
+              <div class="col-6 text-end">
+                <button type="button" class="btn btn-sm btn-sm-bis" @click="sumarProducto(item.id_producto)">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-sm-bis" @click="restarProducto(item.id_producto)">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-sm-bis text-danger"
+                  @click="borrarProducto(item.id_producto)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="text-end my-3">
@@ -79,6 +80,15 @@ export default {
 };
 </script>
 <style scoped>
+.info {
+  font-size: 1.5rem;
+  width: 40px;
+  text-align: left;
+  color: #4292d7;
+  float: left;
+  padding-left: 4px;
+}
+
 .btn-sm-bis {
   padding: 0px;
   width: 23px;
@@ -90,7 +100,9 @@ export default {
 
 @media (max-width: 1399px) {
   .carrito-chiquito {
+    padding: 10px;
     margin-bottom: 20px !important;
+    ;
   }
 }
 </style>

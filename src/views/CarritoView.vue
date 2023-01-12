@@ -14,7 +14,7 @@
         </div>
       </div>
       <div v-else class="table-responsive table-bordered">
-        <table class="table text-center">
+        <table class="table text-center tabla-overflow">
           <thead>
             <tr>
               <th scope="col">Nombre</th>
@@ -41,29 +41,33 @@
               <td class="w-25">$ {{ item.precio }}</td>
             </tr>
           </tbody>
-          <tbody>
+
+        </table>
+      </div>
+
+      <table class="table text-center">
+        <thead>
             <tr>
               <td colspan="4" class="value-total">
                 Precio Total: $ <span>{{ obtenerPrecioTotal }}</span>
               </td>
             </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="2" class="p-2 text-start">
+              <button type="button" class="btn btn-danger me-2 fw-bold" @click="limpiarCarrito()"><i
+                  class="fas fa-trash"></i>
+                Limpiar Carrito</button>
+            </td>
+            <td colspan="2" class="value-total p-2">
+              <button type="button" class="btn btn-success fw-bold" @click="finalizarPedido()">
+                <i class="fas fa-shopping-cart"></i> Finalizar Pedido
+              </button>
+            </td>
+          </tr>
           </tbody>
-          <tbody>
-            <tr>
-              <td colspan="2" class="p-2 text-start">
-                <button type="button" class="btn btn-danger me-2 fw-bold" @click="limpiarCarrito()"><i
-                    class="fas fa-trash"></i>
-                  Limpiar Carrito</button>
-              </td>
-              <td colspan="2" class="value-total p-2">
-                <button type="button" class="btn btn-success fw-bold" @click="finalizarPedido()">
-                  <i class="fas fa-shopping-cart"></i> Finalizar Pedido
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </table>
     </div>
   </div>
 </template>

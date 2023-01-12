@@ -1,18 +1,21 @@
 <template>
   <div id="app">
     <NavbarMenu />
-    <router-view class="container mt-4 mb-4"/>
+    <router-view class="container mb-4"/>
+    <FooterMain />
   </div>
 </template>
 
 <script>
 import { mapActions, mapMutations } from 'vuex';
+import FooterMain from './components/FooterMain.vue';
 import NavbarMenu from "./components/NavbarMenu.vue";
 
 export default {
   name: "App",
   components: {
     NavbarMenu,
+    FooterMain,
   },
   created() {
     this.cargarCarrito()
@@ -36,7 +39,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-size: 0.9em;
-  margin-top: 100px;
-  padding-bottom: 40px
+  margin-top: 80px;
+  margin-bottom: 100px;
+}
+html, body {
+  min-height: 100%;
+}
+.tabla-overflow {
+  min-width: 1000px;
 }
 </style>

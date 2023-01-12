@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="row" v-if="!productoNotFound">
-      <div class="col-6">
-        <img :src="producto.image" class="card-img-top" />
+      <div class="col-md-6">
+        <img :src="producto.image" class="card-img-top shadow rounded" />
       </div>
-      <div class="col-6 product-info p-4">
+      <div class="col-md-6 product-info p-4">
         <h4 class="card-title fw-bold pb-4">{{ producto.nombre }}</h4>
         <p v-html="obtenerDescripcionConSalto"></p>
         <h3 class="pt-3 pb-2">$ {{ producto.precio }}</h3>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "ProductoView",
   data() {
@@ -44,7 +44,7 @@ export default {
     };
   },
   created() {
-    
+  
     if(this.obtenerPrivilegios() == 1) {
       this.$router.push('/gestion')
       return;
@@ -59,8 +59,7 @@ export default {
   },
   methods: {
     ...mapGetters('productos', ['obtenerProductos']),
-    ...mapGetters('usuarios', ['obtenerPrivilegios']),
-    ...mapActions('productos', ['obtenerProductosAPI']),
+    ...mapGetters('usuarios', ['obtenerPrivilegios', 'obtenerId']),
     ...mapMutations('carrito', ['insertarProducto']),
 
     addProductToCart(event) {
@@ -76,7 +75,7 @@ export default {
         id_producto: Number(this.producto.id),
         precio: this.producto.precio,
         cantidad: 1,
-        usuario: Number(localStorage.clientID),
+        usuario: Number(this.obtenerId()),
       });
 
       setTimeout(() => {

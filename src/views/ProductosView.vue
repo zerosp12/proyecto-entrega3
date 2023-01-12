@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ModuleTitle moduloTitulo="Pedí desde tu casa" moduloTexto="- Agrega los productos al carrito de compras y luego finaliza el pedído!" moduloIcono="fas fa-motorcycle" />
+    <ModuleTitle moduloTitulo="Pedí desde tu casa" moduloTexto="" moduloIcono="fas fa-motorcycle" />
     <div v-if="showLoading">
       <LoadingSpinner />
     </div>

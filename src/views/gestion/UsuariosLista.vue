@@ -4,8 +4,8 @@
     <div v-if="showLoading" class="text-center">
       <LoadingSpinner />
     </div>
-    <div v-else class="table table-bordered text-center">
-      <table class="table">
+    <div v-else class="table-responsive table-bordered text-center">
+      <table class="table tabla-overflow">
         <thead>
           <tr>
             <th scope="col">Usuario</th>

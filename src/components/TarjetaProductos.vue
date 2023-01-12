@@ -6,8 +6,9 @@
         <h6 class="card-title fw-bold">{{ producto.nombre }}</h6>
       </div>
       <div class="card-footer d-grid gap-2">
-        <div class="btn-group" role="group">
-          <button type="button" class="btn fw-bold btn-sm py-2 pedido" :class="botonActivo ? 'btn-success' : 'btn-danger'" @click.prevent="addProductToCart($event)">
+        <div :class="classBotones" role="group">
+          <button type="button" class="btn fw-bold btn-sm py-2 pedido"
+            :class="botonActivo ? 'btn-success' : 'btn-danger'" @click.prevent="addProductToCart($event)">
             <i class="fas fa-shopping-cart mr-2 btn-block"></i> $ {{ producto.precio }}
           </button>
           <button type="button" class="btn btn-warning fw-bold mas-info" @click="verProducto(producto.id)">
@@ -25,10 +26,18 @@ export default {
   data: () => {
     return {
       botonActivo: false,
+      classBotones: 'btn-group'
     };
   },
   props: {
     producto: Object,
+  },
+  mounted() {
+    this.handleResize()
+    window.addEventListener('resize', this.handleResize)
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
   },
   computed: {
     chequearBoton() {
@@ -38,7 +47,10 @@ export default {
   methods: {
     ...mapMutations('carrito', ['insertarProducto']),
     ...mapGetters('usuarios', ['obtenerId']),
-
+    handleResize() {
+      this.classBotones = window.matchMedia('(max-width: 576px)').matches
+        ? 'btn-group-vertical' : 'btn-group'
+    },
     verProducto(index) {
 
       if (this.botonActivo == false) {
@@ -78,32 +90,40 @@ export default {
   width: 95%;
   margin: 1% !important;
 }
-.pedido {
-  width: 60%;
-}
-.mas-info {
-    width: 30%;
-    font-size: 0.9em;
-}
+
 a {
   text-decoration: none;
   color: #333;
 }
+
 .row>* {
   padding: 4px !important;
 }
+
 .card:hover {
   cursor: pointer;
   box-shadow: 0px 0px 6px 2px #bbb;
 }
+
 .card-footer {
   background-color: white !important;
   border-top: 0px;
   padding-bottom: 20px;
 }
-.card-img, .card-img-bottom, .card-img-top {
-    width: 100%;
-    height: 100%;
+
+.card-img,
+.card-img-bottom,
+.card-img-top {
+  width: 100%;
+  height: 100%;
+}
+
+.pedido {
+  font-size: 1.1em;
+}
+
+.mas-info {
+  font-size: 0.9em;
 }
 
 @media (max-width: 1399px) {
@@ -115,11 +135,10 @@ a {
 @media (min-width: 1400px) {
   .pedido {
     width: 70%;
-    font-size: 1.2em;
   }
+
   .mas-info {
     width: 30%;
-    font-size: 1.0em;
   }
 }
 </style>
