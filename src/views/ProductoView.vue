@@ -45,7 +45,7 @@ export default {
   },
   created() {
     
-    if(localStorage.userPrivileges == 1) {
+    if(this.obtenerPrivilegios() == 1) {
       this.$router.push('/gestion')
       return;
     }
@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     ...mapGetters('productos', ['obtenerProductos']),
+    ...mapGetters('usuarios', ['obtenerPrivilegios']),
     ...mapActions('productos', ['obtenerProductosAPI']),
     ...mapMutations('carrito', ['insertarProducto']),
 

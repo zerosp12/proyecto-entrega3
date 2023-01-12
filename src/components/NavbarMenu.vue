@@ -23,7 +23,7 @@
                 </router-link>
               </li>
               <li v-if="checkLogin() && obtenerPrivilegios() == 0" class="nav-item">
-                <router-link class="nav-link" :to="linkCarrito">
+                <router-link class="nav-link" :to="`/carrito/${this.obtenerId()}`">
                   <i class="fas fa-shopping-cart mr-2"></i> 
                   <span class="badge text-bg-warning">{{ obtenerCarritoCount }}</span>
                 </router-link>

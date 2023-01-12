@@ -6,7 +6,7 @@
         <h6 class="card-title fw-bold">{{ producto.nombre }}</h6>
       </div>
       <div class="card-footer d-grid gap-2">
-        <div class="btn-group" role="group" aria-label="Basic example">
+        <div class="btn-group" role="group">
           <button type="button" class="btn fw-bold btn-sm py-2 fs-6 pedido" :class="botonActivo ? 'btn-success' : 'btn-danger'" @click.prevent="addProductToCart($event)">
             <i class="fas fa-shopping-cart mr-2 btn-block"></i> $ {{ producto.precio }}
           </button>
@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   name: "ProductCard",
   data: () => {
@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     ...mapMutations('carrito', ['insertarProducto']),
+    ...mapGetters('usuarios', ['obtenerId']),
 
     verProducto(index) {
 
@@ -57,7 +58,7 @@ export default {
         id_producto: Number(this.producto.id),
         precio: this.producto.precio,
         cantidad: 1,
-        usuario: Number(localStorage.clientID),
+        usuario: Number(this.obtenerId),
       });
 
       setTimeout(() => {

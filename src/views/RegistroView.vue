@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       usuarios: [],
-
+      botonActivo: false,
       //Form Check
       regform: {},
       model: {
@@ -118,6 +118,9 @@ export default {
 
     enviarRegistro() {
       if (this.regform.$valid) {
+
+        if(this.botonActivo == true) return;
+
         if (this.usuarios.find(x => x.usuario == this.model.nombre)) {
           this.crearMensaje(2, "El usuario ya se encuentra en uso")
           return
@@ -137,6 +140,8 @@ export default {
           privilegios: this.model.privilegios,
         }
 
+        this.botonActivo = true
+
         this.$store.dispatch('usuarios/agregarUsuarioAPI', usuario)
 
           .then(resultado => {
@@ -152,6 +157,8 @@ export default {
 
               this.crearMensaje(1, "La cuenta fue creada exitosamente")
               this.regform._reset()
+
+              this.botonActivo = false
 
               setTimeout(() => {
                 this.$router.push("/login")

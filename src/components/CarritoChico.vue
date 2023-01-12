@@ -61,6 +61,7 @@ export default {
   methods: {
     ...mapGetters('productos', ['obtenerProductos']),
     ...mapGetters('carrito', ['obtenerCarrito']),
+    ...mapGetters('usuarios', ['obtenerId']),
     ...mapMutations('carrito', ['sumarProducto', 'restarProducto', 'borrarProducto', 'limpiarCarrito']),
 
     obtenerNombreProducto(index) {
@@ -69,7 +70,7 @@ export default {
     },
 
     irAlCarrito() {
-      this.$router.push(`/carrito/${localStorage.clientID}`)
+      this.$router.push(`/carrito/${this.obtenerId()}`)
     }
   },
   computed: {

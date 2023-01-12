@@ -51,9 +51,9 @@
           <tbody>
             <tr>
               <td colspan="2" class="p-2 text-start">
-                <button type="button" class="btn btn-danger me-2 fw-bold" @click="limpiarCarrito()"><i class="fas fa-trash"></i>
+                <button type="button" class="btn btn-danger me-2 fw-bold" @click="limpiarCarrito()"><i
+                    class="fas fa-trash"></i>
                   Limpiar Carrito</button>
-
               </td>
               <td colspan="2" class="value-total p-2">
                 <button type="button" class="btn btn-success fw-bold" @click="finalizarPedido()">
@@ -77,12 +77,13 @@ export default {
   data() {
     return {
       productos: [],
+      botonActivo: false,
       clientID: "",
     };
   },
   created() {
 
-    if(localStorage.userPrivileges == 1) {
+    if (this.obtenerPrivilegios() == 1) {
       this.$router.push('/gestion')
       return;
     }
@@ -92,6 +93,7 @@ export default {
   methods: {
     ...mapGetters('productos', ['obtenerProductos']),
     ...mapGetters('carrito', ['obtenerCarrito']),
+    ...mapGetters('usuarios', ['checkLogin', 'obtenerId', 'obtenerNombre', 'obtenerDireccion', 'obtenerPrivilegios']),
     ...mapMutations('carrito', ['sumarProducto', 'restarProducto', 'borrarProducto', 'limpiarCarrito']),
 
     obtenerNombreProducto(index) {
@@ -101,16 +103,17 @@ export default {
 
     finalizarPedido() {
 
-      if(localStorage.isLogin == false)
-      {
+      if (this.checkLogin() == false) {
         this.$router.push('/login')
         return;
       }
 
+      if (this.botonActivo == true) return;
+
       let pedido = {
-        usuario: localStorage.clientID,
-        nombre: localStorage.clientName,
-        direccion: localStorage.clientAddress,
+        usuario: this.obtenerId,
+        nombre: this.obtenerNombre,
+        direccion: this.obtenerDireccion,
         productos: []
       }
 
@@ -124,9 +127,20 @@ export default {
 
       })
 
-      this.$store.dispatch('carrito/terminarPedido', pedido)
-      this.crearMensaje(1, "Su pedido fue cargado exitosamente! En breve haremos el envío.")
-      this.limpiarCarrito()
+      this.botonActivo = true
+
+      this.$store.dispatch('carrito/terminarPedido', pedido).then(
+        x => {
+          if (x.status == 201) {
+            this.botonActivo = false
+            this.crearMensaje(1, "Su pedido fue cargado exitosamente! En breve haremos el envío.")
+            this.limpiarCarrito()
+          } else {
+            this.crearMensaje(2, "Se produjo un error al intentar cargar el pedido, intenta nuevamente!")
+          }
+        }
+      )
+
     },
   },
   computed: {
